@@ -1,6 +1,9 @@
 package main.java.com.gameengine.core;
 
 import javax.swing.JFrame;
+
+import main.java.com.gameengine.config.EngineConfig;
+
 import java.awt.Canvas;
 import java.awt.Dimension;
 
@@ -9,16 +12,18 @@ public class Window {
     private final JFrame frame;
     private final Canvas canvas;
 
-    public Window(String title, int width, int height){
-        frame = new JFrame(title);
+    public Window(EngineConfig config){
+        frame = new JFrame(config.getTitle());
         canvas = new Canvas();
+        Dimension size = new Dimension(new Dimension(config.getWindowWidth(), 
+                                              config.getWindowHeight()));
 
-        canvas.setPreferredSize(new Dimension(width, height));
-        canvas.setMinimumSize(new Dimension(width, height));
-        canvas.setMaximumSize(new Dimension(width, height));
+        canvas.setPreferredSize(size);
+        canvas.setMinimumSize(size);
+        canvas.setMaximumSize(size);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        frame.setResizable(config.isResizable());
         frame.add(canvas);
         frame.pack();
         frame.setLocationRelativeTo(null);

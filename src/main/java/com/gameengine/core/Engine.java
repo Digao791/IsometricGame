@@ -21,9 +21,7 @@ public class Engine {
 
     public void start(){
         window = new Window(
-            config.getTitle(),
-            config.getWindowWidth(),
-            config.getWindowHeight()
+            config
         );
 
         frameBuffer = new FrameBuffer(config.getInternalWidth(),
@@ -34,7 +32,8 @@ public class Engine {
         gameLoop = new GameLoop(game,
              window.getCanvas(), 
              renderer, 
-             frameBuffer);
+             frameBuffer,
+            config);
 
         gameLoop.start();
         gameThread = new Thread(gameLoop,
