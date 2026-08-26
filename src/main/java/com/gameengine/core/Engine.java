@@ -1,35 +1,35 @@
 package main.java.com.gameengine.core;
 
+import main.java.com.gameengine.config.EngineConfig;
 import main.java.com.gameengine.graphics.FrameBuffer;
 import main.java.com.gameengine.graphics.Renderer;
 
 public class Engine {
     
-    private static final int INTERNAL_WIDTH = 320;
-    private static final int INTERNAL_HEIGHT = 180;
-    
-    private static final int SCALE = 4;
     private final Game game;
+    private final EngineConfig config;
     private Window window;
     private Renderer renderer;
     private FrameBuffer frameBuffer;
     private GameLoop gameLoop;
     private Thread gameThread;
 
-    public Engine(Game game){
+    public Engine(Game game, EngineConfig config){
         this.game = game;
+        this.config = config;
     }
 
     public void start(){
         window = new Window(
-            "Java Isometric Engine",
-            INTERNAL_WIDTH * SCALE,
-            INTERNAL_HEIGHT * SCALE
+            config.getTitle(),
+            config.getWindowWidth(),
+            config.getWindowHeight()
         );
 
-        renderer = new Renderer();
-        frameBuffer = new FrameBuffer(INTERNAL_WIDTH,
-             INTERNAL_HEIGHT);
+        frameBuffer = new FrameBuffer(config.getInternalWidth(),
+             config.getInternalHeight());
+
+        renderer = new Renderer(frameBuffer);
 
         gameLoop = new GameLoop(game,
              window.getCanvas(), 

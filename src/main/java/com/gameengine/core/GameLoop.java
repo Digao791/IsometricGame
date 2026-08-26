@@ -3,6 +3,7 @@ package main.java.com.gameengine.core;
 import java.awt.Canvas;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 
 import main.java.com.gameengine.graphics.FrameBuffer;
@@ -59,30 +60,32 @@ public class GameLoop implements Runnable {
             return;
         }
 
-        Graphics2D  framebufferGraphics = 
-                    frameBuffer.createGraphics();
-        renderer.setGraphics(framebufferGraphics);
+        renderer.begin();
         game.render(renderer);
-        framebufferGraphics.dispose();
+        renderer.end();
 
         Graphics2D screenGraphics = 
         (Graphics2D) bufferStrategy.getDrawGraphics();
 
-        screenGraphics.setRenderingHint(
-            RenderingHints.KEY_INTERPOLATION, 
-            RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+        try{
+            screenGraphics.setRenderingHint(
+                RenderingHints.KEY_INTERPOLATION, 
+                RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
 
-        screenGraphics.drawImage(
-            frameBuffer.getImage(), 
-            0,
-            0,
-            canvas.getWidth(),
-            canvas.getHeight(),
-            null 
-        );
-        
-        screenGraphics.dispose();
+            screenGraphics.drawImage(
+                frameBuffer.getImage(), 
+                0,
+                0,
+                canvas.getWidth(),
+                canvas.getHeight(),
+                null 
+            );
+        }finally{
+            screenGraphics.dispose();
+        }
+    
         bufferStrategy.show();
+        Toolkit.getDefaultToolkit().sync();
     }
 
     public void start(){

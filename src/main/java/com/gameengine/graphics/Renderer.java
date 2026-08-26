@@ -5,7 +5,23 @@ import java.awt.Graphics2D;
 
 public class Renderer {
     
+    private final FrameBuffer frameBuffer;
     private Graphics2D graphics;
+
+    public Renderer(FrameBuffer frameBuffer){
+        this.frameBuffer = frameBuffer;
+    }
+
+    public void begin(){
+        graphics = frameBuffer.createGraphics();
+    }
+
+    public void end(){
+        if(graphics != null){
+            graphics.dispose();
+            graphics = null;
+        }
+    }
 
     public void setGraphics(Graphics2D graphics){
         this.graphics = graphics;
@@ -16,8 +32,8 @@ public class Renderer {
         graphics.fillRect(
             0, 
             0, 
-            320, 
-            180
+            frameBuffer.getWidth(), 
+            frameBuffer.getHeight()
         );
     }
 
