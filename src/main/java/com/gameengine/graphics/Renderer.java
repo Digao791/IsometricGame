@@ -1,4 +1,4 @@
-package main.java.com.gameengine.graphics;
+package com.gameengine.graphics;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

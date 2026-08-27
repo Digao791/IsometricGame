@@ -1,4 +1,4 @@
-package main.java.com.gameengine.input;
+package com.gameengine.input;
 
 public class Keyboard {
     

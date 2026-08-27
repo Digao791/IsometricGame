@@ -1,8 +1,8 @@
-package main.java.com.gameengine.core;
+package com.gameengine.core;
 
 import javax.swing.JFrame;
 
-import main.java.com.gameengine.config.EngineConfig;
+import com.gameengine.config.EngineConfig;
 
 import java.awt.Canvas;
 import java.awt.Dimension;

@@ -1,4 +1,4 @@
-package main.java.com.gameengine.config;
+package com.gameengine.config;
 
 
 public final class EngineConfig {

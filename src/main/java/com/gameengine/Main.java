@@ -1,8 +1,8 @@
-package main.java.com.gameengine;
+package com.gameengine;
 
-import main.java.com.gameengine.config.EngineConfig;
-import main.java.com.gameengine.core.Engine;
-import main.java.com.gameengine.game.IsoGame;
+import com.gameengine.config.EngineConfig;
+import com.gameengine.core.Engine;
+import com.gameengine.game.IsoGame;
 
 public class Main {
     public static void main(String[] args) {

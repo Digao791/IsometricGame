@@ -1,8 +1,8 @@
-package main.java.com.gameengine.core;
+package com.gameengine.core;
 
-import main.java.com.gameengine.config.EngineConfig;
-import main.java.com.gameengine.graphics.FrameBuffer;
-import main.java.com.gameengine.graphics.Renderer;
+import com.gameengine.config.EngineConfig;
+import com.gameengine.graphics.FrameBuffer;
+import com.gameengine.graphics.Renderer;
 
 public class Engine {
     

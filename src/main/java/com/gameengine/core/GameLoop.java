@@ -1,4 +1,4 @@
-package main.java.com.gameengine.core;
+package com.gameengine.core;
 
 import java.awt.Canvas;
 import java.awt.Graphics2D;
@@ -7,9 +7,9 @@ import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.util.concurrent.locks.LockSupport;
 
-import main.java.com.gameengine.config.EngineConfig;
-import main.java.com.gameengine.graphics.FrameBuffer;
-import main.java.com.gameengine.graphics.Renderer;
+import com.gameengine.config.EngineConfig;
+import com.gameengine.graphics.FrameBuffer;
+import com.gameengine.graphics.Renderer;
 
 public class GameLoop implements Runnable {
 

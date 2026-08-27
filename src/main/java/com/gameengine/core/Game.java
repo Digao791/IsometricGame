@@ -1,6 +1,6 @@
-package main.java.com.gameengine.core;
+package com.gameengine.core;
 
-import main.java.com.gameengine.graphics.Renderer;
+import com.gameengine.graphics.Renderer;
 
 public interface Game {
     void init();

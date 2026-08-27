@@ -1,9 +1,9 @@
-package main.java.com.gameengine.game;
+package com.gameengine.game;
 
 import java.awt.Color;
 
-import main.java.com.gameengine.core.Game;
-import main.java.com.gameengine.graphics.Renderer;
+import com.gameengine.core.Game;
+import com.gameengine.graphics.Renderer;
 
 public class IsoGame implements Game{
     
