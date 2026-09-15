@@ -6,13 +6,15 @@ import com.gameengine.config.EngineConfig;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Window {
     
     private final JFrame frame;
     private final Canvas canvas;
 
-    public Window(EngineConfig config){
+    public Window(EngineConfig config, Runnable onClose){
         frame = new JFrame(config.getTitle());
         canvas = new Canvas();
         Dimension size = new Dimension(new Dimension(config.getWindowWidth(), 
@@ -24,6 +26,13 @@ public class Window {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(config.isResizable());
+        frame.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent event){
+                onClose.run();
+            }
+        });
+
         frame.add(canvas);
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -37,5 +46,9 @@ public class Window {
 
     public JFrame getFrame(){
         return frame;
+    }
+
+    public void close(){
+        frame.dispose();
     }
 }

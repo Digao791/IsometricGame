@@ -21,6 +21,8 @@ public class GameLoop implements Runnable {
     private final Renderer renderer;
     private final FrameBuffer frameBuffer;
     private final EngineConfig config;
+    private final Runnable onStop;
+    private final GameContext context;
     private volatile boolean running;
 
     private final double nsPerTick;
@@ -30,16 +32,20 @@ public class GameLoop implements Runnable {
 
     public GameLoop(
         Game game,
+        GameContext context,
         Canvas canvas,
         Renderer renderer,
         FrameBuffer frameBuffer,
-        EngineConfig config
+        EngineConfig config,
+        Runnable onStop
     ){
         this.game = game;
+        this.context = context;
         this.canvas = canvas;
         this.renderer = renderer;
         this.frameBuffer = frameBuffer;
         this.config = config;
+        this.onStop = onStop;
 
          this.nsPerTick =
                 ONE_SECOND / (double) config.getTargetTps();
@@ -51,7 +57,7 @@ public class GameLoop implements Runnable {
     }
     @Override
     public void run() {
-        game.init();
+        game.init(context);
         long previousTime =
                 System.nanoTime();
 
@@ -68,7 +74,7 @@ public class GameLoop implements Runnable {
             previousTime = frameStart ;
 
             while(accumulator >= nsPerTick){
-                game.tick();
+                game.tick(context);
                 tickCounter++;
                 accumulator -= nsPerFrame;
             }
@@ -92,6 +98,7 @@ public class GameLoop implements Runnable {
             limitFrameRate(frameStart);
         }
         game.shutdown();
+        onStop.run();
     }
 
     private void limitFrameRate(long frameStart){

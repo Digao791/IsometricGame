@@ -3,6 +3,7 @@ package com.gameengine.core;
 import com.gameengine.config.EngineConfig;
 import com.gameengine.graphics.FrameBuffer;
 import com.gameengine.graphics.Renderer;
+import com.gameengine.input.InputManager;
 
 public class Engine {
     
@@ -14,15 +15,26 @@ public class Engine {
     private GameLoop gameLoop;
     private Thread gameThread;
 
+    private InputManager inputManager;
+    private GameContext gameContext;
+
     public Engine(Game game, EngineConfig config){
         this.game = game;
         this.config = config;
+
+        if(game == null) throw new IllegalArgumentException("Game cannot be null");
+        if(config == null) throw new IllegalArgumentException("EngineConfig cannot be null");
     }
 
-    public void start(){
+    public synchronized void start(){
+        if(gameThread != null) return;
         window = new Window(
-            config
+            config,
+            this::stop
         );
+
+        inputManager = new InputManager(window.getCanvas());
+        gameContext = new GameContext(config, inputManager);
 
         frameBuffer = new FrameBuffer(config.getInternalWidth(),
              config.getInternalHeight());
@@ -30,15 +42,32 @@ public class Engine {
         renderer = new Renderer(frameBuffer);
 
         gameLoop = new GameLoop(game,
+            gameContext,
              window.getCanvas(), 
              renderer, 
              frameBuffer,
-            config);
+             config,
+             this::shutdown);
 
-        gameLoop.start();
         gameThread = new Thread(gameLoop,
             "GameThread"
         );
+
+        gameLoop.start();
         gameThread.start();
+    }
+
+    public synchronized void stop(){
+        if(gameLoop == null) return;
+        gameLoop.stop();
+    }
+
+    public EngineConfig getConfig(){
+        return config;
+    }
+
+    private void shutdown(){
+        if(window != null) window.close();
+        gameThread = null;
     }
 }
